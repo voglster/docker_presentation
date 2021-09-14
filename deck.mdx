@@ -1,6 +1,7 @@
 import i from './public/in_the_computer.png';
 import live_code from './public/live_coding.png';
 import argo from './public/argo.png';
+import questions from './public/questions.png';
 
 
 # Docker
@@ -13,12 +14,23 @@ by Jim Vogel
 
 ```
 Docker is a game changer,
-at first its some black box,
-the second it clicks for you,
+at first its some black box you mostly ignore,
+but the second it clicks for you,
 you will never look at development the same
 ```
 
 -- My UI/UX/react Developer
+
+---
+
+# Who am I
+
+ - Jim Vogel
+ - director of data science
+ - work in Oil & Gas
+ - capSpire is the company name
+
+Always hiring good developers feel free to look us up or talk to me on slack
 
 ---
 
@@ -191,13 +203,13 @@ driven off a yaml config file:
 version: "3"
 
 services:
-  mongo:
+  db:
     image: mongo
 
   api:
     image: pyapp
     environment:
-      - DB_HOST:mongo
+      - DB_HOST:db
     ports:
       - 8005:8005
 ```
@@ -260,7 +272,8 @@ spec:
 
 ---
 
-# Questions?
+<img style={{width:"30%", height: "30%"}} src={questions}/>
 
 - My Name: Jim Vogel
 - Company: capSpire
+- repo for presentation: https://bit.ly/dockerjim

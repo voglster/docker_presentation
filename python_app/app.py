@@ -14,10 +14,6 @@ pprint(dict(os.environ))
 client = MongoClient(mongodb_host, 27017)
 db = client.presentation_db
 
-@hug.get('/echo')
-def echo_ep(msg: str="you didnt provide a msg to echo!"):
-    return msg
-
 @hug.get('/save')
 def save_message_endpoint(msg: str):
     db.messages.insert_one({'msg': msg})
