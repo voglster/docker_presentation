@@ -1,0 +1,266 @@
+import i from './public/in_the_computer.png';
+import live_code from './public/live_coding.png';
+import argo from './public/argo.png';
+
+
+# Docker
+a practical react developer guide
+
+by Jim Vogel
+
+
+---
+
+```
+Docker is a game changer,
+at first its some black box,
+the second it clicks for you,
+you will never look at development the same
+```
+
+-- My UI/UX/react Developer
+
+---
+
+## Quick overview
+
+- what docker is
+- how to use docker
+- demo of docker in the real world
+- quick touch on kubernetes
+- Q&A
+- ...
+- profit?
+
+---
+
+## What is docker?
+
+```
+super lightweight VM
+wrapped networking
+wrapped filesystem
+fast turn on/off/reset
+```
+
+---
+
+## Great so what do we use it for?
+
+    need a service?
+    - mongodb
+    - redis?
+    - insert service name here
+
+You don't have to learn how to install them, <br/>configure them, <br/>or worry about dependencies
+
+No management of the services, just develop the application
+
+---
+
+
+## Hey wait what about deployment
+
+- build once
+- deploy anywhere (mostly)
+
+
+---
+
+
+# Assuming you have:
+- control over a dns name
+- a pc in the cloud (digital ocean droplet?)
+- a little knowledge about docker
+- a "dockerized" app
+
+You can deploy that app with ssl in a few minutes for the public to see
+
+
+---
+
+# where do you get docker?
+https://docs.docker.com/get-docker/
+
+Hello world for docker
+```
+docker run --rm hello-world
+```
+
+---
+
+# Command Line vs GUI
+
+There are gui tools
+
+you wont see them here
+
+opinionated comment:
+
+## command line is better
+
+
+---
+
+# How Do I's of Docker
+
+ - starting containers
+ - port forwarding
+ - seeing whats running
+ - mounting data
+ - logging and output
+ - getting "inside" a running container
+
+
+---
+
+# Port Forwarding
+
+docker abstracts and isolates networks for you
+
+you need to explicitly expose ports
+
+`docker run -p 8006:80 nginx`
+
+---
+
+
+# Persistent Storage
+
+docker abstracts and isolates storage for you
+
+if you want date to stay you need to mount a drive
+
+`docker run -v /opt/data:/data nginx`
+
+
+---
+
+# Let's see what's running
+
+`docker ps -a`
+
+ - ps command shows running processes
+ - -a is for all
+
+---
+
+# Let's see some logs
+
+tail and follow are your best friends
+
+`docker logs --tail=50 -f mongo1`
+
+---
+
+# Getting IN the container
+
+<img style={{width:"30%", height: "30%"}} src={i}/>
+
+caveat, you only need this when really in the weeds
+
+`docker exec -it mongo1 bash`
+
+
+---
+
+# Talking between containers
+
+ - abstracted and isolated networks
+ - manual creation
+
+practical perspective:
+
+Use docker-compose
+
+---
+
+# Alright what is docker compose
+
+multiple related services, one command
+
+driven off a yaml config file:
+
+`docker-compose.yml`
+
+---
+
+# example:
+
+```yaml
+version: "3"
+
+services:
+  mongo:
+    image: mongo
+
+  api:
+    image: pyapp
+    environment:
+      - DB_HOST:mongo
+    ports:
+      - 8005:8005
+```
+
+config is passed via environment variables
+
+[click me](https://hub.docker.com/_/postgres) for env documentation example
+
+---
+
+# Demo of docker compose and app interaction
+
+
+<img style={{width:"30%", height: "30%"}} src={live_code}/>
+
+---
+
+# Kubernetes
+
+way too big to intro with this meetup
+
+- even higher level abstraction than docker/compose
+- way more yaml
+- describe services, fail overs etc
+- make a zero downtime application (even through deployments)
+
+---
+
+<img style={{width:"80%", height: "80%"}} src={argo}/>
+
+
+---
+
+# Example Kubernetes YAML
+
+```YAML
+apiVersion: apps/v1
+kind: Deployment # Type of the kubernetes resource
+metadata:
+  name: auth # Name of the Kubernetes resource
+spec:
+  revisionHistoryLimit: 0
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+        - name: auth
+          image: bestbuy_auth:kube
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: auth-port
+              containerPort: 8000
+          env:
+            - name: MOUNT_POINT
+              value: service/auth
+```
+
+---
+
+# Questions?
+
+- My Name: Jim Vogel
+- Company: capSpire

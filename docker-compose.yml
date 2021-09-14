@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  db:
+    image: mongo
+
+  api:
+    image: pyapp
+    environment:
+      - DB_HOST=db
+    ports:
+      - 8005:8005
