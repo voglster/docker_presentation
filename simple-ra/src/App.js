@@ -4,9 +4,10 @@ import {useState} from "react";
 function App() {
     const [messages, setMessages] = useState([]);
     const loadData = () => {
-        fetch('http://localhost:8005/get').then(response => response.json()).then(data => setMessages(data)).catch((e) => {
-            alert("Failed to get data")
-        })
+        fetch('http://localhost:8005/get')
+            .then(response => response.json())
+            .then(data => setMessages(data))
+            .catch((e) => {alert("Failed to get data")})
     }
     const handleDataChange = () => {
         loadData()
